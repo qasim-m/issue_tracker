@@ -55,6 +55,11 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  gem "rspec-rails", "~> 8.0.2"   # For Rails 8 support
+  gem "factory_bot_rails"       # Factories for test data
+  gem "faker"                   # Fake data generation
+  gem "shoulda-matchers"        # One-liner tests for models
+  gem "simplecov", require: false  # Test coverage reports
 end
 
 group :development do
