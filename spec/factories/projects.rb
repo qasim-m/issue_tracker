@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :project do
     association :user
-    name { Faker::App.name }
-    description { Faker::Lorem.sentence }
+    title { Faker::App.name }
   end
 end
