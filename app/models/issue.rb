@@ -10,7 +10,6 @@ class Issue < ApplicationRecord
 
   enum :status, { open: 0, in_progress: 1, on_hold: 2, closed: 3 }
 
-  validates :description, presence: true, length: { minimum: 5, maximum: 1000 }
   validates :title, presence: true, length: { minimum: 3, maximum: 100 }
 
   private
