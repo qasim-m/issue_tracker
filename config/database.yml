@@ -23,6 +23,9 @@ development:
 test:
   <<: *default
   database: issue_tracker_test
+
+production:
+  url: <%= ENV["DATABASE_URL"] %>
 # development:
 #   <<: *default
 #   database: storage/development.sqlite3
