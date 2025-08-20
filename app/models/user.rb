@@ -1,8 +1,9 @@
 class User < ApplicationRecord
-  has_many :projects
-  has_many :comments
-  has_many :created_issues, class_name: "Issue", foreign_key: "created_by"
-  has_many :assigned_issues, class_name: "Issue", foreign_key: "assigned_to"
+
+  has_many :projects, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :created_issues, class_name: "Issue", foreign_key: "created_by", dependent: :nullify
+  has_many :assigned_issues, class_name: "Issue", foreign_key: "assigned_to", dependent: :nullify
 
   validates :name,
     presence: true,

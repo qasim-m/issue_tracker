@@ -4,8 +4,8 @@ class Project < ApplicationRecord
 
   validates :title,
     presence: true,
-    uniqueness: { case_sensitive: false },
-    length: { minimum: 3, maximum: 50 },
-    format: { with: /\A[a-zA-Z0-9\s-]+\z/, message: "only allows letters, numbers, dash and spaces" }
-  validates :user_id, presence: true
+    uniqueness: { scope: :user_id, case_sensitive: false },
+    length: { in: 3..50 },
+    format: { with: /\A[\w\s'-]+\z/, message: "only allows letters, numbers, underscores, dashes, apostrophes and spaces" }
+
 end
