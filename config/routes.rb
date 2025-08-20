@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   # /issues/:id for show/edit/update/destroy (shorter URLs)
   resources :projects do
     resources :issues, shallow: true do
-      resources :comments, only: [:create, :destroy]
+      resources :comments, only: [:create]
     end
   end
 end

@@ -1,28 +1,11 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: %i[show edit update destroy]
   before_action :set_issue, only: %i[new create]
-
-  # GET /comments or /comments.json
-  def index
-    @comments = if params[:issue_id]
-      Comment.where(issue_id: params[:issue_id])
-    else
-      Comment.all
-    end
-  end
-
-  # GET /comments/1
-  def show
-  end
 
   # GET /comments/new
   def new
     @comment = Comment.new(issue: @issue)
   end
 
-  # GET /comments/1/edit
-  def edit
-  end
 
   # POST /comments
   def create
@@ -39,24 +22,6 @@ class CommentsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /comments/1
-  def update
-    respond_to do |format|
-      if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: "Comment was successfully updated.", status: :see_other }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /comments/1
-  def destroy
-    @comment.destroy!
-    respond_to do |format|
-      format.html { redirect_to comments_path, notice: "Comment was successfully destroyed.", status: :see_other }
-    end
-  end
 
   private
 
