@@ -1,0 +1,24 @@
+<% content_for :title, "Project Details" %>
+
+<div class="container mx-auto px-4 py-10 max-w-7xl space-y-10">
+  <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+    <div class="flex flex-row justify-between">
+
+      <%= link_to "Back to Projects", projects_path,
+          class: "self-start text-center rounded-sm px-5 py-2 border-2 border-blue-600 text-blue-500 font-semibold shadow-sm transition hover:bg-blue-600 hover:text-white" %>
+
+      <%= link_to "Add New Issue", new_project_issue_path(@project),
+          class: "self-end text-center rounded-sm px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-sm transition" %>
+    </div>
+
+    <div class="flex flex-col mt-8 sm:flex-row justify-between items-start sm:items-center gap-4">
+      <h1 class="font-bold text-3xl text-gray-900"><%= @project.title %></h1>
+    </div>
+
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-2 text-gray-700 text-sm gap-2">
+      <span class="font-medium">Created: <%= @project.created_at.strftime("%b %d, %Y") %></span>
+    </div>
+
+    <%= render "issues_table", project: @project %>
+  </div>
+</div>

@@ -23,6 +23,12 @@
   </head>
 
   <body>
-    <%= yield %>
+    <%= render "shared/navbar" %>
+    <div class="container mx-auto mt-10 px-5 flex justify-center">
+      <%= render "shared/notice" %>
+    </div>
+    <main class="container mx-auto mt-10 px-5 flex">
+      <%= yield %>
+    </main>
   </body>
 </html>

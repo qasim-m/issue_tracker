@@ -1,0 +1,63 @@
+<% content_for :title, "Projects" %>
+
+<div class="container mx-auto px-4 py-8 max-w-6xl">
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+    <h1 class="text-3xl sm:text-4xl font-semibold text-gray-900">Projects</h1>
+    <%= link_to "Create New Project", new_project_path,
+      class: "rounded-sm px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-lg transition transform hover:-translate-y-1" %>
+  </div>
+
+  <div data-controller="projects-search" id="projects-container">
+    <div class="mb-4">
+      <label for="projects-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+      <div class="relative max-w-md ml-auto">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+          <i class="fas fa-search w-4 h-4 text-gray-500"></i>
+        </div>
+        <input type="search" name="query" id="projects-search"
+              class="search block w-full p-4 ps-10 text-sm font-medium text-gray-900 border border-gray-300 rounded-sm bg-white focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Search projects..." />
+      </div>
+    </div>
+    <div id="projects" class="space-y-4">
+      <% if @projects.any? %>
+        <ul class="list divide-y divide-gray-200 bg-white rounded-sm shadow-xl overflow-hidden" data-projects-search-target="list">
+          <% @projects.each do |project| %>
+            <li data-id="<%= project.id %>" class="py-6 px-6 hover:bg-gray-50 transition-colors duration-200 ease-in-out">
+              <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="flex-1">
+                  <h2 class="title text-xl font-medium text-gray-900"><%= project.title %></h2>
+                </div>
+                <button id="action_dropdown_<%= project.id %>" data-dropdown-toggle="action_dropdown_id<%= project.id %>" class="text-3xl cursor-pointer" type="button">
+                  <i class="fa-solid fa-ellipsis"></i>
+                </button>
+                <div id="action_dropdown_id<%= project.id %>" class="z-10 hidden bg-white rounded-lg shadow-md w-44">
+                  <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="action_dropdown_<%= project.id %>">
+                    <li>
+                      <%= link_to "View", project,
+                        class: "block w-full px-4 py-2 text-left font-medium rounded-md text-blue-600 hover:bg-blue-100 hover:text-blue-700 transition" %>
+                    </li>
+                    <li>
+                      <%= link_to "Edit", edit_project_path(project),
+                        class: "block w-full px-4 py-2 text-left font-medium rounded-md text-blue-600 hover:bg-blue-100 hover:text-blue-700 transition" %>
+                    </li>
+                    <li>
+                      <%= button_to "Delete", project, method: :delete,
+                        class: "block w-full px-4 py-2 text-left font-medium rounded-md text-red-600 hover:bg-red-100 hover:text-red-700 font-semibold transition cursor-pointer",
+                        data: { turbo_confirm: "Are you sure you want to delete this project?" } %>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+        <ul class="pagination flex justify-center mt-4 space-x-2" data-turbo="false"></ul>
+      <% else %>
+        <div class="text-center my-10 p-8 bg-white rounded-sm shadow-md">
+          <p class="text-gray-500 text-lg">No projects found. Start by creating a new one!</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<% flash.each do |type, message| %>
+  <% bg_color, border_color, text_color = case type.to_sym
+      when :notice
+        ['bg-green-100', 'border-green-500', 'text-green-700']
+      when :alert
+        ['bg-red-100', 'border-red-500', 'text-red-700']
+      when :info
+        ['bg-blue-100', 'border-blue-500', 'text-blue-700']
+      when :warning
+        ['bg-yellow-100', 'border-yellow-500', 'text-yellow-700']
+      else
+        ['bg-gray-100', 'border-gray-500', 'text-gray-700']
+      end %>
+
+  <div class="<%= bg_color %> border-l-4 <%= border_color %> <%= text_color %> p-4 mb-4 rounded-lg shadow-md flex items-start space-x-3" role="alert">
+    <div class="flex-1">
+      <p class="font-semibold capitalize"><%= type %></p>
+      <p><%= message %></p>
+    </div>
+    <button onclick="this.parentElement.remove()" class="text-gray-500 hover:text-gray-700 ml-4 font-bold">&times;</button>
+  </div>
+<% end %>

@@ -1,0 +1,26 @@
+<nav class="bg-white shadow-lg px-8 md:px-16 py-4 flex justify-between items-center sticky top-0 z-50">
+  <div>
+    <%= link_to projects_path, class: "text-2xl font-extrabold text-gray-800 tracking-wide hover:text-blue-600 transition-colors duration-200" do %>
+      IssuesTracker
+    <% end %>
+  </div>
+
+  <div class="flex items-center space-x-6">
+    <% if user_signed_in? %>
+      <div class="hidden md:flex space-x-8 text-gray-700 font-medium">
+        <%= link_to projects_path, class: "relative group px-2 py-1 hover:text-blue-600 transition-colors duration-200" do %>
+          Projects
+          <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
+        <% end %>
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <%= button_to "Logout #{current_user.name || "User"}", destroy_user_session_path, method: :delete,
+          class: "bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition-colors duration-200" %>
+      </div>
+    <% else %>
+      <%= link_to "Login", new_user_session_path, 
+            class: "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors duration-200" %>
+    <% end %>
+  </div>
+</nav>
