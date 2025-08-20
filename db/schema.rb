@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_19_184206) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_20_103832) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -25,20 +25,22 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_19_184206) do
   end
 
   create_table "issues", force: :cascade do |t|
-    t.integer "issue_number"
+    t.integer "issue_number", null: false
     t.integer "status", default: 0, null: false
     t.text "description"
     t.string "title"
     t.bigint "project_id", null: false
-    t.integer "created_by"
-    t.integer "assigned_to"
+    t.bigint "created_by", null: false
+    t.bigint "assigned_to"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["project_id"], name: "index_issues_on_project_id"
+    t.index ["project_id", "assigned_to"], name: "index_issues_on_project_and_assignee"
+    t.index ["project_id", "issue_number"], name: "index_issues_on_project_and_number", unique: true
+    t.index ["project_id", "status"], name: "index_issues_on_project_and_status"
   end
 
   create_table "projects", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -54,5 +56,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_19_184206) do
   add_foreign_key "comments", "issues"
   add_foreign_key "comments", "users"
   add_foreign_key "issues", "projects"
+  add_foreign_key "issues", "users", column: "assigned_to"
+  add_foreign_key "issues", "users", column: "created_by"
   add_foreign_key "projects", "users"
 end
