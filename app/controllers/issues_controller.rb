@@ -2,15 +2,6 @@ class IssuesController < ApplicationController
   before_action :set_issue, only: %i[show edit update destroy]
   before_action :set_project, only: %i[new create edit update destroy]
 
-  # GET /issues
-  def index
-    @issues = if params[:project_id]
-                Issue.where(project_id: params[:project_id])
-              else
-                Issue.all
-              end
-  end
-
   # GET /issues/1
   def show
   end
