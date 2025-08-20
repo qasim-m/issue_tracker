@@ -91,6 +91,20 @@ RSpec.describe "Issues", type: :request do
       expect(issue.status).to eq("in_progress")
     end
   end
+  describe "PATCH /issues/:id" do
+    context "with invalid parameters" do
+      let(:invalid_update) do
+        { issue: { title: "" } } # blank title will fail validation
+      end
+
+      it "does not update the issue and renders edit" do
+        patch issue_path(issue), params: invalid_update
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.body).to include("Editing Issue") # or some content in the edit template
+        expect(issue.reload.title).not_to eq("")
+      end
+    end
+  end
 
   describe "DELETE /issues/:id" do
     it "deletes the issue" do
