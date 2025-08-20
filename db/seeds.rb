@@ -1,27 +1,31 @@
 # db/seeds.rb
-puts "🌱 Seeding database..."
-
+puts "Seeding database..."
+# Clear existing data
+Comment.destroy_all
+Issue.destroy_all
+Project.destroy_all
+User.destroy_all
 # === Users ===
 users = []
-(1..3).each do |i|
+(1..10).each do |i|
   users << User.find_or_create_by!(email: "user#{i}@example.com") do |user|
     user.name = "User #{i}"
     user.password = "password"  # Devise requires password
     user.password_confirmation = "password"
   end
 end
-puts "✅ Created #{users.size} users"
+puts "Created #{users.size} users"
 
 # === Projects ===
 projects = []
-(1..15).each do |i|
+(1..30).each do |i|
   projects << Project.find_or_create_by!(title: "Project #{i}", user: users[i % users.size])
 end
-puts "✅ Created #{projects.size} projects"
+puts "Created #{projects.size} projects"
 
 # === Issues & Comments ===
 projects.each do |project|
-  (1..10).each do |i|
+  (1..30).each do |i|
     creator = users.sample
     assignee = (users - [creator]).sample
 
@@ -42,4 +46,4 @@ projects.each do |project|
   end
 end
 
-puts "🌟 Seeding completed!"
+puts "Seeding completed!"

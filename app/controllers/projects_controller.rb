@@ -22,7 +22,8 @@ class ProjectsController < ApplicationController
   # POST /projects
   def create
     @project = Project.new(project_params)
-    @project.user = User.first
+    @project.user = current_user  # assign the User object directly
+
     respond_to do |format|
       if @project.save
         format.html { redirect_to @project, notice: "Project was successfully created." }
@@ -59,7 +60,8 @@ class ProjectsController < ApplicationController
   end
 
   # Only allow a list of trusted parameters through.
+  # Remove :user_id since current_user will be assigned automatically
   def project_params
-    params.require(:project).permit(:title, :user_id)
+    params.require(:project).permit(:title)
   end
 end

@@ -28,11 +28,13 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
     @comment.issue = @issue if @issue
+    @comment.user = current_user
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @comment, notice: "Comment was successfully created." }
+        format.html { redirect_to @issue, notice: "Comment was successfully created." }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        @issue = @comment.issue
+        format.html { render "issues/show", status: :unprocessable_content }
       end
     end
   end
