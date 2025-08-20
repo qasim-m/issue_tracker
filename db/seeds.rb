@@ -1,9 +1,45 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+# db/seeds.rb
+puts "🌱 Seeding database..."
+
+# === Users ===
+users = []
+(1..3).each do |i|
+  users << User.find_or_create_by!(email: "user#{i}@example.com") do |user|
+    user.name = "User #{i}"
+    user.password = "password"  # Devise requires password
+    user.password_confirmation = "password"
+  end
+end
+puts "✅ Created #{users.size} users"
+
+# === Projects ===
+projects = []
+(1..15).each do |i|
+  projects << Project.find_or_create_by!(title: "Project #{i}", user: users[i % users.size])
+end
+puts "✅ Created #{projects.size} projects"
+
+# === Issues & Comments ===
+projects.each do |project|
+  (1..10).each do |i|
+    creator = users.sample
+    assignee = (users - [creator]).sample
+
+    issue = Issue.find_or_create_by!(project: project, issue_number: i) do |iss|
+      iss.title = "Issue #{i} for #{project.title}"
+      iss.description = "This is description for issue #{i} in #{project.title}"
+      iss.created_by = creator.id
+      iss.assigned_to = assignee&.id
+      iss.status = 0 # default (open)
+    end
+
+    # Add comments
+    (1..5).each do |j|
+      Comment.find_or_create_by!(issue: issue, text: "Comment #{j} on #{issue.title}") do |comment|
+        comment.user = users.sample
+      end
+    end
+  end
+end
+
+puts "🌟 Seeding completed!"

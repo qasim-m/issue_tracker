@@ -5,6 +5,7 @@ gem "rails", "~> 8.0.2", ">= 8.0.2.1"
 gem "tailwindcss-ruby", "~> 4.1.11"
 gem "tailwindcss-rails", "~> 4.3"
 gem "byebug", "~> 12.0"
+gem 'devise'
 gem "activerecord", "~> 8.0"
 gem "pg", "~> 1.6.1"
 gem "foreman", "~> 0.90.0"

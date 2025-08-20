@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  devise_for :users
+  # Only generate login/logout routes
+  devise_for :users, skip: [:registrations, :passwords]
   # Root: show all projects
   root "projects#index"
 
