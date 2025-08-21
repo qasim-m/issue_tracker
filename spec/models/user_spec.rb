@@ -5,7 +5,7 @@ RSpec.describe User, type: :model do
   describe "associations" do
     it { should have_many(:projects).dependent(:destroy) }
     it { should have_many(:comments).dependent(:destroy) }
-    it { should have_many(:created_issues).class_name("Issue").with_foreign_key("created_by").dependent(:nullify) }
+    it { should have_many(:created_issues).class_name("Issue").with_foreign_key("created_by").dependent(:destroy) }
     it { should have_many(:assigned_issues).class_name("Issue").with_foreign_key("assigned_to").dependent(:nullify) }
   end
 
