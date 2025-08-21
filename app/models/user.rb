@@ -3,7 +3,10 @@ class User < ApplicationRecord
 
   has_many :projects, dependent: :destroy
   has_many :comments, dependent: :destroy
-  has_many :created_issues, class_name: "Issue", foreign_key: "created_by", dependent: :nullify
+
+  
+  has_many :created_issues, class_name: "Issue", foreign_key: "created_by", dependent: :destroy
+  # dependent: :nullify to remove user_id from issue if the user gets deleted to avoid orphand records
   has_many :assigned_issues, class_name: "Issue", foreign_key: "assigned_to", dependent: :nullify
 
   validates :name,
