@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.2", ">= 8.0.2.1"
-gem "tailwindcss-ruby", "~> 4.1.11"
+gem "tailwindcss-ruby", "~> 4.1.12"
 gem "tailwindcss-rails", "~> 4.3"
 gem "byebug", "~> 12.0"
 gem 'devise'
