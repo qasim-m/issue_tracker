@@ -25,9 +25,11 @@ test:
   database: issue_tracker_test
 
 production:
-  <<: *default
+  adapter: postgresql
   url: <%= ENV["DATABASE_URL"] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  cable:
+    <<: *production
 # development:
 #   <<: *default
 #   database: storage/development.sqlite3
