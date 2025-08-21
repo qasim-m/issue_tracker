@@ -62,6 +62,6 @@ class ProjectsController < ApplicationController
   # Only allow a list of trusted parameters through.
   # Remove :user_id since current_user will be assigned automatically
   def project_params
-    params.require(:project).permit(:title)
+    params.expect(project: [:title])
   end
 end
