@@ -20,19 +20,16 @@ rails db:seed
 # Run the App Locally
 bundle exec foreman start -f Procfile.dev
 
----
+
 ## Run all test cases
 bundle exec rspec
 
----
 ## To run security warnings
 bundle exec brakeman
 
+## Production Deploy
+### To deploy this app to Heroku as a collaborator:
 
----
-## Production Deployment (Heroku)
-To deploy this app to Heroku as a collaborator:
-```bash
 # Add Heroku remote
 heroku git:remote -a issue-tracker-test-mq
 # Commit Procfile for Heroku
