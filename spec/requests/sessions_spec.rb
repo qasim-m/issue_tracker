@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe "User Sessions", type: :request do
-  let(:user) { create(:user) } # uses FactoryBot, password & confirmation already set
+  let(:user) { create(:user) }
 
   describe "GET /users/sign_in" do
     it "renders the login page" do
@@ -16,7 +16,7 @@ RSpec.describe "User Sessions", type: :request do
     context "with valid credentials" do
       it "signs in the user and redirects" do
         post user_session_path, params: { user: { email: user.email, password: user.password } }
-        expect(response).to redirect_to(root_path) # default Devise after sign in path
+        expect(response).to redirect_to(authenticated_root_path) # ✅ use authenticated_root_path
         follow_redirect!
         expect(response.body).to include("Signed in successfully")
       end
@@ -31,12 +31,13 @@ RSpec.describe "User Sessions", type: :request do
   end
 
   describe "DELETE /users/sign_out" do
-    before { sign_in user } # Devise test helper
+    before { sign_in user }
 
     it "logs out the user" do
       delete destroy_user_session_path
-      expect(response).to redirect_to(root_path)
+      expect(response).to redirect_to(unauthenticated_root_path) # ✅ after logout goes back here
       follow_redirect!
+      expect(response.body).to include("Log in")
     end
   end
 end

@@ -1,26 +1,17 @@
-<nav class="bg-white shadow-lg px-8 md:px-16 py-4 flex justify-between items-center sticky top-0 z-50">
-  <div>
-    <%= link_to projects_path, class: "text-2xl font-extrabold text-gray-800 tracking-wide hover:text-blue-600 transition-colors duration-200" do %>
-      IssuesTracker
+<nav class="justify_between_container px-20 sticky py-2 top-0 z-50 navbar">
+  <div class="justify_between_container ml-20">
+    <%= link_to projects_path, class: "link_hover_blue text-2xl font-bold" do %>
+      Issues Tracker
     <% end %>
   </div>
 
   <div class="flex items-center space-x-6">
     <% if user_signed_in? %>
-      <div class="hidden md:flex space-x-8 text-gray-700 font-medium">
-        <%= link_to projects_path, class: "relative group px-2 py-1 hover:text-blue-600 transition-colors duration-200" do %>
-          Projects
-          <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
-        <% end %>
-      </div>
-
-      <div class="flex items-center space-x-4">
-        <%= button_to "Logout #{current_user.name || "User"}", destroy_user_session_path, method: :delete,
-          class: "bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition-colors duration-200" %>
-      </div>
+      <p class="small_para"><%= current_user.name %></p>
+      <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn_outline_white py-1" %>
     <% else %>
-      <%= link_to "Login", new_user_session_path, 
-            class: "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors duration-200" %>
+      <%= link_to "Login", new_user_session_path, class: "btn_outline_white my-2 py-1" %>
+      <%= link_to "Sign Up", new_user_registration_path, class: "btn_outline_white my-2 py-1" %>
     <% end %>
   </div>
 </nav>

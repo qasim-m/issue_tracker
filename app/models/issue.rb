@@ -6,6 +6,8 @@ class Issue < ApplicationRecord
 
   # Associations for creator and assignee (both are users)
   belongs_to :creator, class_name: "User", foreign_key: "created_by"
+
+  # optional: true for assignee because issue can be assigned after creation
   belongs_to :assignee, class_name: "User", foreign_key: "assigned_to", optional: true
 
   enum :status, { open: 0, in_progress: 1, on_hold: 2, closed: 3 }
