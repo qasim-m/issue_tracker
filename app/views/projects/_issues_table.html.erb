@@ -2,7 +2,7 @@
   <div class="justify_between_container mb-2 mt-4">
     <div class="icon_search_parent_div">
       <div class="icon_parent_div"><i class="fas fa-search gray_icon"></i></div>
-      <input type="search" name="query" id="projects-search" class="search search_icon_inp" placeholder="Search Issues..." />
+      <input type="search" name="query" data-issues-search-target="search" id="projects-search" class="search search_icon_inp" placeholder="Search Issues..." />
     </div>
     <p class="medium_para">Total Issues: <%= @project.issues.count %></p>
   </div>
