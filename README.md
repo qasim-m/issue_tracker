@@ -1,24 +1,41 @@
-# README
+# Issue Tracker App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Ruby and Rails Version
+- **Ruby:** 3.3.9
+- **Rails:** 8.0.2.1
 
-Things you may want to cover:
+---
+## Local Setup
 
-* Ruby version
+### Install Dependencies
 
-* System dependencies
+```bash
+bundle install
+# Create database
+rails db:create
+# Run migrations
+rails db:migrate
+# Seed database
+rails db:seed
+# Run the App Locally
+bundle exec foreman start -f Procfile.dev
 
-* Configuration
+---
+## Run all test cases
+bundle exec rspec
 
-* Database creation
+---
+## To run security warnings
+bundle exec brakeman
 
-* Database initialization
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+---
+## Production Deployment (Heroku)
+To deploy this app to Heroku as a collaborator:
+```bash
+# Add Heroku remote
+heroku git:remote -a issue-tracker-test-mq
+# Commit Procfile for Heroku
+git commit -m "Your Commit Message"
+# Push code to Heroku
+git push heroku main
