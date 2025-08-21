@@ -1,6 +1,6 @@
 <div data-comment-form-target="form" class="<%= hidden_class %> flex flex-col gap-2 w-full">
   <%= form_with(model: [issue, comment || issue.comments.build], local: true, class: "flex gap-2 items-center") do |f| %>
-    <%= f.text_field :text, placeholder: "Write a comment...", class: "block w-full rounded-sm border px-4 py-1 shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition" %>
-    <%= f.submit "Post", data: { action: "click->comment-form#hideForm" }, class: "px-3 py-2 bg-blue-600 text-white rounded-sm hover:bg-blue-700 text-sm font-semibold" %>
+    <%= f.text_field :text, placeholder: "Write a comment...", class: "text_inp" %>
+    <%= f.submit "Post", data: { action: "click->comment-form#hideForm" }, class: "btn_primary py-2" %>
   <% end %>
 </div>

@@ -1,11 +1,10 @@
 <% content_for :title, "Editing Project" %>
 
-<div class="container mx-auto py-8 max-w-2xl">
-  <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-200 transition-all">
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-      <h1 class="font-extrabold text-3xl text-gray-900">Editing Project</h1>
-      <%= link_to "Back to Projects", projects_path,
-          class: "self-start text-center rounded-sm px-5 py-2 border-2 border-blue-600 text-blue-500 font-semibold shadow-sm transition hover:bg-blue-600 hover:text-white" %>
+<div class="container mx-auto px-4 py-8 max-w-2xl">
+  <div class="bg-white p-8 rounded-lg shadow-xl mt-40">
+    <div class="justify_between_container">
+      <h1 class="heading_base">Editing Project</h1>
+      <%= link_to "Back to Project", project_path(@project), class: "btn_outline_primary py-2" %>
     </div>
     <%= render "form", project: @project %>
   </div>

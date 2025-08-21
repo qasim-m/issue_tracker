@@ -1,17 +1,12 @@
 <% content_for :title, "Issue Details" %>
 
 <div class="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
-    <h1 class="text-3xl font-extrabold text-gray-900">Issue Details</h1>
-
-    <%= link_to project_path(@issue.project),
-          class: "inline-flex items-center px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-sm shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition" do %>
-      <i class="fa-solid fa-arrow-left mr-2"></i>
-      Back to Project
-    <% end %>
+  <div class="justify_between_container">
+    <h1 class="heading_base">Issue Details</h1>
+    <%= link_to "Back to Project", project_path(@issue.project), class: "btn_outline_white py-2" %>
   </div>
 
-  <div class="bg-white">
+  <div class="bg-white mt-6">
     <%= render @issue %>
   </div>
 
