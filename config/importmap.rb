@@ -7,7 +7,8 @@ pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
 pin_all_from "app/javascript/controllers", under: "controllers"
 # UI libs
 pin "flowbite", to: "https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.turbo.min.js"
-pin "list.js", to: "https://cdn.jsdelivr.net/npm/list.js@2.3.1/dist/list.min.js"
+# config/importmap.rb
+pin "list.js", to: "https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.standalone.min.js"
 pin "string-natural-compare", to: "https://cdn.jsdelivr.net/npm/string-natural-compare@3.0.1/index.js"
 # Optional: FontAwesome (JS version, if needed)
 pin "@fortawesome/fontawesome-free", to: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/js/all.min.js"
