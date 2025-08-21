@@ -55,7 +55,7 @@
             <tr data-id="<%= issue.id %>" class="text-sm">
               <td class="px-2 py-1 normal_para issue_number"><%= issue.issue_number %></td>
               <td class="px-2 py-1 normal_para title"><%= issue.title %></td>
-              <td class="px-2 py-1 normal_para created_at"><%= issue.created_at.strftime("%b %d, %Y") %></td>
+              <td class="px-2 py-1 normal_para created_at"><%= issue.created_at.strftime("%b %d, %Y %H:%M") %></td>
               <td class="px-2 py-1 normal_para assigned_to"><%= issue.assigned_to.present? ? User.find(issue.assigned_to).name : "Unassigned" %></td>
               <td class="px-2 py-1 normal_para status">
                 <span class="px-2 py-1 text-xs font-medium rounded-full 
