@@ -8,7 +8,7 @@ Rails.application.configure do
 
   # Eager load code on boot for better performance and memory savings (ignored by Rake tasks).
   config.eager_load = true
-
+  config.cache_store = :memory_store, { size: 256.megabytes }
   # Full error reports are disabled.
   config.consider_all_requests_local = false
 
@@ -47,7 +47,7 @@ Rails.application.configure do
   config.active_support.report_deprecations = false
 
   # Replace the default in-process memory cache store with a durable alternative.
-  config.cache_store = :solid_cache_store
+  # config.cache_store = :solid_cache_store
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
   config.active_job.queue_adapter = :solid_queue
