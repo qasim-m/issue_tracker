@@ -12,7 +12,7 @@
         <h1 class="heading_base"><%= @project.title %></h1>
         <span class="light_para">Created: <%= @project.created_at.strftime("%b %d, %Y") %></span>
       </div>
-      <div class="justify_between_container border-2 border-gray-700 rounded-lg">
+      <div class="justify_between_container border-2 border-gray-500 rounded-lg">
         <%= link_to edit_project_path(@project), class: "link_hover_blue mx-2 py-1", title: "Edit Project" do %>
           <i class="fas fa-edit"></i>
         <% end %>

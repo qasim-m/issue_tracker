@@ -1,19 +1,30 @@
 <nav class="justify_between_container px-20 sticky py-2 top-0 z-50 navbar">
   <div class="justify_between_container">
-    <%= link_to projects_path, class: "link_hover_blue navbar_logo btn_small_white text-2xl" do %>
+    <%= link_to projects_path, class: "navbar_logo" do %>
       Issues Tracker
     <% end %>
   </div>
 
   <div class="flex items-center space-x-6">
     <% if user_signed_in? %>
-      <p class="medium_para"><%= current_user.name %></p>
-      <%= button_to destroy_user_session_path, method: :delete, class: "btn_small_white py-1" do %>
-        Logout <i class="fa fa-sign-out"></i>
+      <p class="small_para text-white py-1 px-2">
+        <i class="fa fa-user"></i>
+        <%= current_user.name %>
+      </p>
+      <%= button_to destroy_user_session_path, method: :delete, class: "navbar_link" do %>
+        Logout 
+        <i class="fa fa-sign-out ml-1"></i>
       <% end %>
     <% else %>
-      <%= link_to "Login", new_user_session_path, class: "btn_outline_white my-2 py-1" %>
-      <%= link_to "Sign Up", new_user_registration_path, class: "btn_outline_white my-2 py-1" %>
+      <%= link_to new_user_session_path, class: "navbar_link" do %>
+        Login
+        <i class="fa fa-sign-in"></i>
+      <% end %>
+
+      <%= link_to new_user_registration_path, class: "navbar_link" do %>
+        Sign Up
+        <i class="fa fa-user"></i>
+      <% end %>
     <% end %>
   </div>
 </nav>

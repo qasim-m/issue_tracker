@@ -2,7 +2,7 @@
   <div class="justify_between_container mb-2 mt-4">
     <div class="icon_search_parent_div">
       <div class="icon_parent_div"><i class="fas fa-search gray_icon"></i></div>
-      <input type="search" name="query" data-issues-search-target="search" id="projects-search" class="search search_icon_inp" placeholder="Search Issues..." />
+      <input type="search" name="query" data-issues-search-target="search" id="issues-search" class="search search_icon_inp" placeholder="Search Issues..." />
     </div>
     <p class="medium_para">Total Issues: <%= @project.issues.count %></p>
   </div>
@@ -13,36 +13,36 @@
           <tr>
             <th class="px-4 py-2 light_para">
               Issue No
-              <i class="fa-solid fa-sort text-sm text-gray-500 hover:text-blue-600 cursor-pointer" 
-                data-action="click->issues-search#sort" 
+              <i class="fa-solid fa-sort sort_icon"
+                data-action="click->issues-search#sort"
                 data-sort="issue_number">
               </i>
             </th>
             <th class="px-4 py-2 light_para">
               Title
-              <i class="fa-solid fa-sort text-sm text-gray-500 hover:text-blue-600 cursor-pointer" 
-                data-action="click->issues-search#sort" 
+              <i class="fa-solid fa-sort sort_icon"
+                data-action="click->issues-search#sort"
                 data-sort="title">
               </i>
             </th>
             <th class="px-4 py-2 light_para">
               Date Created
-              <i class="fa-solid fa-sort text-sm text-gray-500 hover:text-blue-600 cursor-pointer" 
-                data-action="click->issues-search#sort" 
+              <i class="fa-solid fa-sort sort_icon" 
+                data-action="click->issues-search#sort"
                 data-sort="created_at">
               </i>
             </th>
             <th class="px-4 py-2 light_para">
               Assigned To
-              <i class="fa-solid fa-sort text-sm text-gray-500 hover:text-blue-600 cursor-pointer" 
-                data-action="click->issues-search#sort" 
+              <i class="fa-solid fa-sort sort_icon"
+                data-action="click->issues-search#sort"
                 data-sort="assigned_to">
               </i>
             </th>
             <th class="px-4 py-2 light_para">
               Status
-              <i class="fa-solid fa-sort text-sm text-gray-500 hover:text-blue-600 cursor-pointer" 
-                data-action="click->issues-search#sort" 
+              <i class="fa-solid fa-sort sort_icon"
+                data-action="click->issues-search#sort"
                 data-sort="status">
               </i>
             </th>
@@ -58,7 +58,7 @@
               <td class="px-2 py-1 normal_para created_at"><%= issue.created_at.strftime("%b %d, %Y %H:%M") %></td>
               <td class="px-2 py-1 normal_para assigned_to"><%= issue.assigned_to.present? ? User.find(issue.assigned_to).name : "Unassigned" %></td>
               <td class="px-2 py-1 normal_para status">
-                <span class="px-2 py-1 text-xs font-medium rounded-full 
+                <span class="px-2 py-1 text-xs font-medium rounded-full
                   <%= case issue.status
                       when "open" then "bg-green-100 text-green-700"
                       when "on_hold" then "bg-yellow-100 text-yellow-700"

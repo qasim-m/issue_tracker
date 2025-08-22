@@ -19,7 +19,7 @@ export default class extends Controller {
   initializeListJs() {
     if (this.hasListTarget) {
       this.listJs = new List(this.element, {
-        valueNames: ["title"],
+        valueNames: ["title", "num"],
         listClass: "list",
         page: 10,
         pagination: true,

@@ -3,7 +3,7 @@
     <h1 class="heading_base">
       <%= issue.project&.title || "Untitled Project" %>
     </h1>
-    <div class="justify_between_container border-2 border-gray-700 rounded-lg">
+    <div class="justify_between_container border-2 border-gray-500 rounded-lg">
       <%= link_to edit_issue_path(issue), class: "link_hover_blue mx-2 py-1", title: "Edit Issue" do %>
         <i class="fas fa-edit"></i>
       <% end %>
