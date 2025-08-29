@@ -1,0 +1,10 @@
+<div class="<%= css_classes[:container] %>">
+  <div class="<%= css_classes[:icon_container] %>">
+    <i class="<%= icon_class %> <%= css_classes[:icon] %>"></i>
+  </div>
+  <%= search_field_tag name, value, 
+      id: id,
+      class: css_classes[:input],
+      placeholder: placeholder,
+      **html_options %>
+</div>

@@ -1,2 +1,63 @@
 @import "tailwindcss";
-@import "../stylesheets/custom_style.css";
+@plugin "@tailwindcss/forms";
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
+@layer base {
+  :root {
+    --gray-100: #F3F4F6;
+    --gray-200: #E5E7EB;
+    --gray-300: #D1D5DB;
+    --gray-400: #9CA3AF;
+    --gray-500: #6B7280;
+    --gray-600: #4B5563;
+    --gray-700: #374151;
+    --gray-800: #1F2937;
+    --gray-900: #111827;
+  }
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background-color: #F5F7F8;
+}
+
+.main_container {
+  @apply container mx-auto max-w-6xl;
+}
+
+.sort_icon {
+  @apply text-sm text-[var(--gray-400)] hover:text-[var(--gray-700)] cursor-pointer
+}
+
+.navbar {
+  background-color: var(--gray-800);
+}
+
+.error_div {
+  @apply bg-red-100 border-l-4 border-red-500 text-red-700 px-4 py-3 rounded-lg shadow mb-6
+}
+
+.error_ul {
+  @apply list-disc ml-6 mt-2 space-y-1
+}
+
+.small_para {
+  @apply text-base font-bold;
+}
+
+.pagination li {
+  @apply mx-1;
+}
+
+.pagination a {
+  @apply block w-full px-3 py-1.5 text-center font-semibold text-base rounded-lg text-[var(--gray-400)] border-2 border-[var(--gray-400)] transition cursor-pointer hover:text-white
+  hover:bg-[var(--gray-800)] hover:border-[var(--gray-800)]
+}
+
+.pagination li.active a {
+  @apply bg-[var(--gray-600)] border-2 border-[var(--gray-600)] text-white
+}
+
+.pagination li.active a:hover {
+  @apply bg-[var(--gray-700)] border-2 border-[var(--gray-700)] text-white
+}

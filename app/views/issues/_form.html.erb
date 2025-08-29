@@ -1,84 +1,69 @@
 <%= form_with(model: issue.persisted? ? issue : [issue.project || @project, issue], class: "space-y-8 rounded-lg") do |form| %>
-  <% if issue.errors.any? %>
-    <div id="error_explanation" class="error_div mt-2">
-      <strong><%= pluralize(issue.errors.count, "error") %></strong> prohibited this issue from being saved:
-      <ul class="error_ul">
-        <% issue.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <%= render "shared/errors", resource: issue %>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4 sm:mb-2">
     <% if issue.project_id.present? %>
-      <%= form.hidden_field :project_id %>
       <div>
-        <%= form.label :project_id, "Project Name", class: "light_para" %>
-        <p class="text_inp mt-1">
+        <%= form.hidden_field :project_id %>
+        <%= render ParaComponent.new(variant: :small, margin_bottom: false, align: :left) do %>
+          Project Name
+        <% end %>
+        <%= render ParaComponent.new(variant: :base, weight: :bold, margin_bottom: false, align: :left) do %>
           <%= Project.find(issue.project_id).title %>
-        </p>
-      </div>
-    <% else %>
-      <div>
-        <%= form.label :project_id, "Project", class: "light_para" %>
-        <%= form.collection_select :project_id, Project.all, :id, :name,
-          { prompt: "Select a project" },
-          { class: "mt-2 block w-full rounded-sm border px-4 py-2 shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition #{issue.errors[:project_id].any? ? 'border-red-500' : 'border-gray-300'}" } %>
+        <% end %>
       </div>
     <% end %>
     <div>
-      <%= form.label :title, "Issue Heading", class: "light_para" %>
-      <%= form.text_field :title, class: ["text_inp mt-1", issue.errors[:title].any? ? "border-red-500" : "border-gray-300"] %>
+      <%= render InputFieldComponent.new(
+        form_builder: form,
+        attribute: :title,
+        type: :text,
+        label: "Issue Title",
+        required: true,
+        autocomplete: "title"
+      ) %>
     </div>
   </div>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4 sm:mb-2">
     <div>
-      <%= form.label :assigned_to, "Assigned To", class: "light_para" %>
-      <%= form.select :assigned_to, 
-            options_for_select(
-              @users.map { |u| [u.name, u.id] }, 
-              issue.assigned_to.to_i.presence # ensures integer and nil-safe
-            ), 
-            { prompt: "Select a user" }, 
-            class: [
-              "text_inp mt-1",
-              "focus:ring-blue-500 focus:border-blue-500",
-              issue.errors[:assigned_to].any? ? "border-red-500" : "border-gray-300"
-            ] %>
+      <%= render InputFieldComponent.new(
+        form_builder: form,
+        attribute: :assigned_to,
+        type: :select,
+        label: "Assigned To",
+        required: false,
+        options: @users.map { |u| [u.name, u.id] },
+        prompt: "Select a user"
+      ) %>
     </div>
-
     <div>
-      <%= form.label :status, "Status", class: "light_para" %>
-      <%= form.select :status, 
-          options_for_select(
-            Issue.statuses.keys.map { |k| [k.humanize, k] }, 
-            issue.status
-          ), 
-          {}, 
-          class: [
-            "text_inp mt-1",
-            "focus:ring-blue-500 focus:border-blue-500",
-            issue.errors[:status].any? ? "border-red-500" : "border-gray-300"
-          ] %>
+      <%= render InputFieldComponent.new(
+        form_builder: form,
+        attribute: :status,
+        type: :select,
+        label: "Status",
+        required: true,
+        options: Issue.statuses.keys.map { |k| [k.humanize, k] },
+        prompt: "Select a status",
+      ) %>
     </div>
   </div>
-
-  <div>
-    <%= form.label :description, "Description", class: "light_para" %>
-    <%= form.text_area :description, rows: 5, class: [
-      "text_area",
-      issue.errors[:description].any? ? "border-red-500" : "border-gray-300"
-    ] %>
+  <div class="grid grid-cols-1 gap-2 mb-4 sm:mb-2">
+    <%= render InputFieldComponent.new(
+      form_builder: form,
+      attribute: :description,
+      type: :textarea,
+      label: "Description",
+      rows: 5,
+    ) %>
   </div>
-
-  <div class="flex justify-end gap-4">
+  <div class="flex justify-end gap-2 mb-4 sm:mb-2">
     <% if issue.persisted? %>
-      <%= link_to "Cancle", issue_path(@issue), class: "btn_outline_primary py-2" %>
+      <%= render LinkComponent.new(href: issue_path(@issue), variant: :outline) do %>
+        Cancle
+      <% end %>
     <% end %>
-
-    <%= form.submit(issue.new_record? ? "Create Issue" : "Update Issue", class: "btn_primary py-2") %>
+    <%= render(ButtonComponent.new(type: "submit", variant: :primary, size: :lg, class: "w-full sm:w-auto")) do %>
+      <%= issue.new_record? ? "Create Issue" : "Update Issue" %>
+    <% end %>
   </div>
-
 <% end %>

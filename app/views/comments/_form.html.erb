@@ -1,6 +1,22 @@
-<div data-comment-form-target="form" class="<%= hidden_class %> flex flex-col gap-2 w-full">
-  <%= form_with(model: [issue, comment || issue.comments.build], local: true, class: "flex gap-2 items-center") do |f| %>
-    <%= f.text_field :text, placeholder: "Write a comment...", class: "text_inp" %>
-    <%= f.submit "Post", data: { action: "click->comment-form#hideForm" }, class: "btn_primary py-2" %>
+<div data-comment-form-target="form" class="<%= hidden_class %> w-full">
+  <%= form_with(model: [issue, comment || issue.comments.build], local: true, class: "flex flex-col sm:flex-row gap-2 w-full") do |f| %>
+    <%= render InputFieldComponent.new(
+      form_builder: f,
+      attribute: :text,
+      type: :text,
+      size: :lg,
+      placeholder: "Write a comment...",
+      label: false,
+      required: false,
+      class: "mb-0"
+    ) %>
+    <%= render(ButtonComponent.new(
+      type: :submit,
+      size: :sm,
+      class: "sm:w-auto w-full mb-4",
+      data: { action: "click->comment-form#toggle" }
+    )) do %>
+      Post
+    <% end %>
   <% end %>
 </div>

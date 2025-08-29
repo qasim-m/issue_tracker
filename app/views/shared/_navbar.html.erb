@@ -1,17 +1,55 @@
-<nav class="justify_between_container px-20 sticky py-2 top-0 z-50 navbar">
-  <div class="justify_between_container ml-20">
-    <%= link_to projects_path, class: "link_hover_blue text-2xl font-bold" do %>
+<nav class="navbar">
+  <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto py-2">
+    <%= render LinkComponent.new(href: projects_path, size: :logo) do %>
       Issues Tracker
     <% end %>
-  </div>
-
-  <div class="flex items-center space-x-6">
-    <% if user_signed_in? %>
-      <p class="small_para"><%= current_user.name %></p>
-      <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn_outline_white py-1" %>
-    <% else %>
-      <%= link_to "Login", new_user_session_path, class: "btn_outline_white my-2 py-1" %>
-      <%= link_to "Sign Up", new_user_registration_path, class: "btn_outline_white my-2 py-1" %>
+    <%= render ButtonComponent.new(
+          variant: :outline,
+          size: :sm,
+          icon: '<i class="fa-solid fa-bars"></i>',
+          icon_position: :center,
+          data: { collapse_toggle: "nav_dropdown" },
+          aria: { controls: "nav_dropdown", expanded: "false" },
+          class: "md:hidden mr-4"
+        ) do %>
     <% end %>
+    <div class="hidden w-full md:block md:w-auto mx-4" id="nav_dropdown">
+      <div class="flex flex-row items-center justify-between space-x-4 mt-4 md:mt-0 md:space-x-8">
+        <% if user_signed_in? %>
+          <%= render ParaComponent.new(variant: :small, color: :white, margin_bottom: false) do %>
+            <i class="fa fa-user"></i>
+            <%= current_user.name %>
+          <% end %>
+          <%= form_with url: destroy_user_session_path, method: :delete, class: "inline" do %>
+            <%= render(ButtonComponent.new(
+                type: :submit,
+                variant: :outline,
+                size: :sm,
+                icon: '<i class="fa fa-sign-out ml-1"></i>',
+                icon_position: :right
+              )) do %>
+              Logout
+            <% end %>
+          <% end %>
+        <% else %>
+          <%= render LinkComponent.new(
+                href: new_user_session_path,
+                icon: '<i class="fa fa-sign-in"></i>',
+                icon_position: :right
+              ) do %>
+            Login
+          <% end %>
+          <%= render LinkComponent.new(
+                href: new_user_registration_path,
+                icon: '<i class="fa fa-user"></i>',
+                icon_position: :right
+              ) do %>
+            Sign Up
+          <% end %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </nav>
+
+

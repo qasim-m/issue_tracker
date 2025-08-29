@@ -1,27 +1,42 @@
-<div class="items_center_container mx-auto mt-40">
-  <div class="max-w-md w-full bg-white p-10 rounded-lg shadow-xl">
-    <h2 class="heading_base mb-4">Log in to your account</h2>
-    
+<div class="flex justify-center items-center mx-auto mt-40">
+  <div class="sm:p-10 p-5 bg-white rounded-lg shadow-xl">
+    <%= render(HeadingComponent.new(level: :h2, color: :secondary, weight: :bold)) do %>
+      Login to your account
+    <% end %>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <div class="mb-4">
-        <%= f.label :email, class: "small_para" %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "text_inp" %>
-      </div>
+      <%= render InputFieldComponent.new(
+        form_builder: f,
+        attribute: :email,
+        type: :email,
+        label: "Email Address",
+        required: true,
+        autocomplete: "email"
+      ) %>
 
-      <div class="mb-6">
-        <%= f.label :password, class: "small_para" %>
-        <%= f.password_field :password, autocomplete: "current-password", class: "text_inp" %>
-      </div>
+      <%= render InputFieldComponent.new(
+        form_builder: f,
+        attribute: :password,
+        type: :password,
+        label: "Enter Your Password",
+        required: true,
+        autocomplete: "password"
+      ) %>
 
       <% if devise_mapping.rememberable? %>
-        <div class="flex items-center mb-2">
-          <%= f.check_box :remember_me, class: "check_box_inp" %>
-          <%= f.label :remember_me, class: "small_para ml-2" %>
-        </div>
+        <%= render CheckboxComponent.new(
+          label: "Remember Me",
+          checked: true,
+          size: :md,
+          color: :primary,
+          label_position: :right,
+          required: false
+        ) %>
       <% end %>
 
       <div class="mb-2">
-        <%= f.submit "Log in", class: "btn_primary w-full py-2" %>
+        <%= render(ButtonComponent.new(type: "submit", variant: :primary, full_width: true, size: :lg)) do %>
+          Log in
+        <% end %>
       </div>
     <% end %>
   </div>

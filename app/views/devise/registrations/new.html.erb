@@ -1,41 +1,52 @@
-<div class="items_center_container mx-auto mt-30">
-  <div class="max-w-lg w-full bg-white p-10 rounded-lg shadow-xl">
-    <h2 class="heading_base mb-4">Create a new account</h2>
-
+<div class="flex justify-center items-center mt-30 mx-auto">
+  <div class="bg-white sm:p-10 p-5 rounded-lg shadow-xl">
+    <%= render(HeadingComponent.new(level: :h2, color: :secondary, weight: :bold)) do %>
+      Create a new account
+    <% end %>
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
 
-      <!-- Name -->
-      <div class="mb-4">
-        <%= f.label :name, class: "small_para" %>
-        <%= f.text_field :name, autofocus: true, class: "text_inp" %>
-      </div>
+      <%= render InputFieldComponent.new(
+        form_builder: f,
+        attribute: :name,
+        type: :text,
+        label: "Name",
+        required: true,
+        autocomplete: "name"
+      ) %>
 
-      <!-- Email -->
-      <div class="mb-4">
-        <%= f.label :email, class: "small_para" %>
-        <%= f.email_field :email, autocomplete: "email", class: "text_inp" %>
-      </div>
+      <%= render InputFieldComponent.new(
+        form_builder: f,
+        attribute: :email,
+        type: :email,
+        label: "Email Address",
+        required: true,
+        autocomplete: "email"
+      ) %>
 
-      <!-- Password -->
-      <div class="mb-4">
-        <%= f.label :password, class: "small_para" %>
-        <% if @minimum_password_length %>
-          <em class="small_para">(<%= @minimum_password_length %> characters minimum)</em>
-        <% end %>
-        <%= f.password_field :password, autocomplete: "new-password", class: "text_inp mt-1" %>
-      </div>
+      <%= render InputFieldComponent.new(
+        form_builder: f,
+        attribute: :password,
+        type: :password,
+        label: "Enter Your Password",
+        required: true,
+        autocomplete: "new-password",
+        minlength: @minimum_password_length,
+        help_text: "(#{@minimum_password_length} characters minimum)"
+      ) %>
 
-      <!-- Password Confirmation -->
-      <div class="mb-6">
-        <%= f.label :password_confirmation, class: "small_para" %>
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "text_inp" %>
-      </div>
+      <%= render InputFieldComponent.new(
+        form_builder: f,
+        attribute: :password_confirmation,
+        type: :password,
+        label: "Confirm Your Password",
+        required: true,
+        autocomplete: "new-password"
+      ) %>
 
-      <!-- Submit -->
-      <div class="mb-2">
-        <%= f.submit "Sign up", class: "btn_primary w-full py-2" %>
-      </div>
+      <%= render(ButtonComponent.new(type: "submit", variant: :primary, full_width: true, size: :lg)) do %>
+        Sign Up
+      <% end %>
     <% end %>
   </div>
 </div>

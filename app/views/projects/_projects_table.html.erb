@@ -1,0 +1,48 @@
+<table class="min-w-full border border-gray-200 divide-y divide-gray-200 rounded-xl shadow-sm">
+    <thead class="bg-gray-200">
+        <tr>
+            <th class="py-2 w-16">
+                <%= render ParaComponent.new(variant: :base, margin_bottom: false, align: :center) do %>
+                    No
+                    <i class="fa-solid fa-sort sort_icon"
+                        data-action="click->projects-search#sort"
+                        data-sort="num">
+                    </i>
+                <% end %>
+            </th>
+            <th class="py-2 px-4">
+                <%= render ParaComponent.new(variant: :base, margin_bottom: false, align: :left) do %>
+                    Title
+                    <i class="fa-solid fa-sort sort_icon"
+                        data-action="click->projects-search#sort"
+                        data-sort="title">
+                    </i>
+                <% end %>
+            </th>
+            <th class="py-2 w-32">
+                <%= render ParaComponent.new(variant: :base, margin_bottom: false, align: :center) do %>
+                    Actions
+                <% end %>
+            </th>
+        </tr>
+    </thead>
+    <tbody class="list bg-white divide-y divide-gray-200" data-projects-search-target="list">
+        <% @projects.each_with_index do |project, index| %>
+            <tr data-id="<%= project.id %>">
+                <td class="w-16 num py-2">
+                    <%= render ParaComponent.new(variant: :small, margin_bottom: false, align: :center) do %>
+                        <%= index + 1 %>
+                    <% end %>
+                </td>
+                <td class="title">
+                    <%= render ParaComponent.new(variant: :base, margin_bottom: false, align: :left, weight: :bold) do %>
+                        <%= project.title %>
+                    <% end %>
+                </td>
+                <td class="w-32">
+                    <%= render partial: "shared/table_actions", locals: { resource: project } %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

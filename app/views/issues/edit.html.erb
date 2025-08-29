@@ -1,16 +1,19 @@
 <% content_for :title, "Editing Issue" %>
-
 <div class="container mx-auto px-4 py-8 max-w-3xl">
-  <div class="bg-white p-8 rounded-sm shadow-xl border border-gray-200">
-    <div class="justify_between_container">
+  <div class="bg-white p-4 sm:p-8 rounded-lg shadow-xl border border-gray-200">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0">
       <div class="flex flex-col items-start">
-        <h1 class="heading_base">Editing Issue</h1>
-        <p class="light_para">Change the details below to update issue.</p>
+        <%= render(HeadingComponent.new(level: :h3, color: :default, weight: :bold, margin_bottom: false)) do %>
+          Editing Issue
+        <% end %>
+        <%= render ParaComponent.new(variant: :extra_small, weight: :normal, margin_bottom: false, align: :left) do %>
+          Change the details below to update issue.
+        <% end %>
       </div>
-      <%= link_to "Back to Project", project_path(@issue.project),
-        class: "btn_outline_white py-2" %>
+      <%= render LinkComponent.new(href: project_path(@issue.project), variant: :outline, class: "w-full sm:w-auto") do %>
+        Back to Project
+      <% end %>
     </div>
-    
     <div class="mx-auto w-full mt-6">
       <%= render "form", issue: @issue %>
     </div>

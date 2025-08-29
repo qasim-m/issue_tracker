@@ -1,21 +1,28 @@
-<%= form_with(model: project, class: "space-y-6 w-full max-w-xl") do |form| %>
-  <% if project.errors.any? %>
-    <div id="error_explanation" class="error_div mt-2">
-      <strong><%= pluralize(project.errors.count, "error") %></strong> prohibited this project from being saved:
-      <ul class="error_ul">
-        <% project.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= form_with(model: project) do |form| %>
+  <%= render "shared/errors", resource: project %>
 
   <div class="mt-4">
-    <%= form.label :title, "Project Title", class: "small_para" %>
-    <%= form.text_field :title, class: ["text_inp mt-1", project.errors[:title].any? ? "border-red-500" : "border-gray-300"] %>
+    <%= render InputFieldComponent.new(
+      form_builder: form,
+      attribute: :title,
+      type: :text,
+      label: "Title",
+      required: true,
+      autocomplete: "title"
+    ) %>
   </div>
 
-  <div class="flex justify-start">
-    <%= form.submit(project.new_record? ? "Create Project" : "Update Project", class: "btn_primary py-2") %>
+  <div class="flex flex-col space-y-3 sm:flex-row sm:justify-between sm:items-center sm:space-y-0 sm:space-x-3">
+    <%= render LinkComponent.new(
+          href: project.new_record? ? projects_path : project_path(project),
+          variant: :outline,
+          class: "w-full sm:w-auto text-center"
+        ) do %>
+      <%= project.new_record? ? "Back To Projects" : "Back To Project" %>
+    <% end %>
+
+    <%= render(ButtonComponent.new(type: "submit", variant: :primary, size: :lg, class: "w-full sm:w-auto")) do %>
+      <%= project.new_record? ? "Create Project" : "Update Project" %>
+    <% end %>
   </div>
 <% end %>
