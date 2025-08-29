@@ -8,7 +8,7 @@ Rails.application.configure do
 
   # Eager load code on boot for better performance and memory savings (ignored by Rake tasks).
   config.eager_load = true
-  config.cache_store = :memory_store, { size: 256.megabytes }
+  config.cache_store = :memory_store, { size: 256 * 1024 * 1024 } # 256MB
   # Full error reports are disabled.
   config.consider_all_requests_local = false
 
