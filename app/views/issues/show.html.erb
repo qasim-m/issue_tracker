@@ -1,14 +1,15 @@
 <% content_for :title, "Issue Details" %>
-
 <div class="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-  <div class="justify_between_container">
-    <h1 class="heading_base">Issue Details</h1>
-    <%= link_to "Back to Project", project_path(@issue.project), class: "btn_outline_white py-2" %>
+  <div class="flex justify-between items-center gap-3 sm:gap-0">
+    <%= render(HeadingComponent.new(level: :h3, color: :default, weight: :bold, margin_bottom: false)) do %>
+      Issue Details
+    <% end %>
+    <%= render LinkComponent.new(href: project_path(@issue.project), variant: :outline) do %>
+      Back to Project
+    <% end %>
   </div>
-
   <div class="bg-white mt-6">
     <%= render @issue %>
   </div>
-
   <%= render "comments/comments_section", issue: @issue %>
 </div>
