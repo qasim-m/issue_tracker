@@ -147,7 +147,7 @@ class InputFieldComponent < ViewComponent::Base
 
   def wrapper_classes
     [
-      'mb-0 sm:mb-4',
+      'mb-4',
       wrapper_class
     ].compact.join(' ')
   end
