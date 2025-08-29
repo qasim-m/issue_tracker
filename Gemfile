@@ -8,6 +8,7 @@ gem "activerecord", "~> 8.0"
 gem "pg", "~> 1.6.1"
 gem "foreman", "~> 0.90.0"
 gem "devise", "~> 4.9"
+gem "view_component", "~> 3.12"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 # Use the Puma web server [https://github.com/puma/puma]
