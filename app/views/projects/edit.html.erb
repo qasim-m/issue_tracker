@@ -1,10 +1,10 @@
 <% content_for :title, "Editing Project" %>
-
-<div class="container mx-auto px-4 py-8 max-w-2xl">
-  <div class="bg-white p-8 rounded-lg shadow-xl mt-40">
-    <div class="justify_between_container">
-      <h1 class="heading_base">Editing Project</h1>
-      <%= link_to "Back to Project", project_path(@project), class: "btn_outline_primary py-2" %>
+<div class="flex justify-center items-center mx-auto mt-40 w-full max-w-xl px-4">
+  <div class="w-full sm:p-10 p-5 bg-white rounded-lg shadow-xl">
+    <div class="flex justify-start items-center">
+      <%= render(HeadingComponent.new(level: :h3, color: :default, weight: :bold, margin_bottom: false)) do %>
+        Editing Project
+      <% end %>
     </div>
     <%= render "form", project: @project %>
   </div>
