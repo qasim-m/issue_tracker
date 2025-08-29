@@ -1,36 +1,31 @@
 <div class="mt-8">
-	<% if @comment&.errors&.any? %>
-		<div id="error_explanation" class="error_div">
-			<h2 class="small_para">
-				<%= pluralize(@comment.errors.count, "error") %> prevented this comment from being saved:
-			</h2>
-			<ul class="error_ul">
-				<% @comment.errors.full_messages.each do |msg| %>
-					<li><%= msg %></li>
-				<% end %>
-			</ul>
-		</div>
-	<% end %>
-
-	<div class="justify_between_container">
-		<h2 class="heading_base">Comments</h2>
-
-		<div class="flex items-start gap-2" data-controller="comment-form">
-			<button type="button" data-comment-form-target="button" data-action="click->comment-form#toggle" class="btn_primary py-2">
-				Add Comment
-			</button>
-
-			<%= render "comments/form", comment: @comment, issue: @issue, hidden_class: (@comment&.errors&.any? ? "" : "hidden") %>
-		</div>
-	</div>
-
+	<%= render "shared/errors", resource: @comment %>
+	<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full">
+    <%= render(HeadingComponent.new(level: :h3, color: :secondary)) do %>
+      Comments
+    <% end %>
+    <div class="flex flex-col sm:flex-row sm:items-center sm:gap-2 w-full sm:w-auto mt-2 sm:mt-0" data-controller="comment-form">
+      <div data-comment-form-target="buttonContainer">
+        <%= render(ButtonComponent.new(
+          class: "mb-0 sm:mb-4",
+          data: {"action" => "click->comment-form#toggle"}
+        )) do %>
+          Add Comment
+        <% end %>
+      </div>
+      <%= render "comments/form",
+            comment: @comment,
+            issue: @issue,
+            hidden_class: (@comment&.errors&.any? ? "" : "hidden") %>
+    </div>
+  </div>
   <div class="space-y-4 mt-4">
     <% if @issue.comments.exists? %>
 			<%= render partial: "comments/comment", collection: @issue.comments.order(created_at: :desc), as: :comment %>
 		<% else %>
-			<div class="items_center_container mt-10">
-				<p class="small_para">No comments yet. Be the first to add one!</p>
-			</div>
+      <%= render ParaComponent.new(margin_bottom: false, align: :center) do %>
+        No comments yet. Be the first to add one!
+      <% end %>
 		<% end %>
   </div>
 </div>
