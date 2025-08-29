@@ -14,9 +14,19 @@
 
   <div class="<%= bg_color %> border-l-4 <%= border_color %> <%= text_color %> p-4 mb-4 rounded-lg shadow-md flex items-start space-x-3" role="alert">
     <div class="flex-1">
-      <p class="font-semibold capitalize"><%= type %></p>
-      <p><%= message %></p>
+      <%= render ParaComponent.new(variant: :extra_small, weight: :normal, margin_bottom: false, align: :left) do %>
+        <%= type.to_s.titleize %>
+      <% end %>
+      <%= render ParaComponent.new(variant: :extra_small, weight: :bold, margin_bottom: false, align: :left) do %>
+        <%= message %>
+      <% end %>
     </div>
-    <button onclick="this.parentElement.remove()" class="text-gray-500 hover:text-gray-700 ml-4 font-bold">&times;</button>
+    <%= render(ButtonComponent.new(
+      type: :button,
+      variant: :icon_only,
+      size: :xs,
+      icon: '<i class="fas fa-xmark"></i>',
+      onclick: "this.parentElement.remove()"
+    )) %>
   </div>
 <% end %>

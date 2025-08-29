@@ -1,0 +1,16 @@
+<% if resource&.errors&.any? %>
+  <div id="error_explanation" class="error_div mt-2">
+    <%= render ParaComponent.new(variant: :extra_small, color: :red, weight: :bold, align: :left) do %>
+      <%= pluralize(resource.errors.count, "error") %> prohibited this <%= resource.model_name.human.downcase %> from being saved:
+    <% end %>
+    <ul class="error_ul">
+      <% resource.errors.each do |error| %>
+        <li>
+          <%= render ParaComponent.new(variant: :extra_small, color: :red, weight: :normal, margin_bottom: false, align: :left) do %>
+            <%= error.full_message %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
