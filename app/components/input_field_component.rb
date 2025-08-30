@@ -18,8 +18,7 @@ class InputFieldComponent < ViewComponent::Base
 
   # State variants
 	STATES = {
-		default: 'border-[var(--gray-300)] focus:border-[var(--gray-600)] focus:ring-[var(--gray-600)]',
-		error:   'border-red-500 focus:border-red-500 focus:ring-red-500'
+		default: 'border-[var(--gray-300)] focus:border-[var(--gray-600)] focus:ring-[var(--gray-600)]'
 	}.freeze
 
   def initialize(
@@ -36,7 +35,6 @@ class InputFieldComponent < ViewComponent::Base
     readonly: false,
     autocomplete: nil,
     wrapper_class: nil,
-    show_errors: true,
     icon: nil,
     icon_position: :left, # :left or :right
     **html_attributes
@@ -54,7 +52,6 @@ class InputFieldComponent < ViewComponent::Base
     @readonly = readonly
     @autocomplete = autocomplete
     @wrapper_class = wrapper_class
-    @show_errors = show_errors
     @icon = icon
     @icon_position = icon_position.to_sym
     @html_attributes = html_attributes
@@ -65,8 +62,7 @@ class InputFieldComponent < ViewComponent::Base
         safe_join([
         render_label,
         render_input,
-        render_help_text,
-        render_error_messages
+        render_help_text
         ].compact)
     end
 	end
@@ -75,11 +71,10 @@ class InputFieldComponent < ViewComponent::Base
 
   attr_reader :form_builder, :attribute, :type, :size, :state, :placeholder, :label,
               :help_text, :required, :disabled, :readonly, :autocomplete,
-              :wrapper_class, :show_errors, :html_attributes, :icon, :icon_position
+              :wrapper_class, :html_attributes, :icon, :icon_position
 
 	def render_label
 		return unless show_label?
-
 		content_tag(:label, for: input_attributes[:id], class: label_classes) do
 			safe_join([label, required_indicator].compact)
 		end
@@ -103,8 +98,7 @@ class InputFieldComponent < ViewComponent::Base
   end
 
   def render_textarea
-    rows = @html_attributes.delete(:rows) || 5
-
+    rows = @html_attributes.fetch(:rows, nil) || 5
     if using_form_builder?
       form_builder.text_area(
         attribute,
@@ -120,17 +114,9 @@ class InputFieldComponent < ViewComponent::Base
 		content_tag(:p, help_text, class: help_text_classes)
 	end
 
-	def render_error_messages
-		return # unless show_error_messages?
-		# content_tag(:div, class: error_classes) do
-		# 	error_messages.join(', ')
-		# end
-	end
-
   def render_select
-    options = @html_attributes.delete(:options) || [] # pass via component
-    prompt  = @html_attributes.delete(:prompt)
-
+    options = @html_attributes.fetch(:options, nil)
+    prompt  = @html_attributes.fetch(:prompt, nil)
     if using_form_builder?
       form_builder.select(
         attribute,
@@ -153,13 +139,10 @@ class InputFieldComponent < ViewComponent::Base
   end
 
   def label_classes
-    classes = [
+    [
       'block text-xs sm:text-sm font-bold mb-1',
       required ? 'text-gray-900' : 'text-gray-700'
-    ]
-    
-    classes << 'text-red-700' if has_errors?
-    classes.join(' ')
+    ].join(' ')
   end
 
 	def input_classes
@@ -180,7 +163,6 @@ class InputFieldComponent < ViewComponent::Base
 
   def input_attributes
     attrs = html_attributes.except(:class)
-    
     attrs.merge!(
       class: input_classes,
       type: type.to_s,
@@ -190,14 +172,14 @@ class InputFieldComponent < ViewComponent::Base
       readonly: readonly,
       autocomplete: autocomplete
     ).compact
-    
+
     # Add form-specific attributes if using form builder
     if using_form_builder?
       attrs[:id] ||= "#{form_builder.object_name}_#{attribute}"
       attrs[:name] ||= "#{form_builder.object_name}[#{attribute}]"
       attrs[:value] = current_value if current_value.present?
     end
-    
+
     attrs
   end
 
@@ -208,26 +190,12 @@ class InputFieldComponent < ViewComponent::Base
   end
 
   def effective_state
-    return :error if has_errors? && show_errors
     state
   end
 
   def current_value
     return nil unless using_form_builder? && attribute
-    
     form_builder.object.public_send(attribute) if form_builder.object.respond_to?(attribute)
-  end
-
-  def has_errors?
-    return false unless using_form_builder? && attribute && show_errors
-    
-    form_builder.object.errors[attribute].any?
-  end
-
-  def error_messages
-    return [] unless has_errors?
-    
-    form_builder.object.errors[attribute]
   end
 
   def show_label?
@@ -238,10 +206,6 @@ class InputFieldComponent < ViewComponent::Base
     help_text.present?
   end
 
-  def show_error_messages?
-    has_errors? && show_errors
-  end
-
   def using_form_builder?
     form_builder.present? && attribute.present?
   end
@@ -250,26 +214,18 @@ class InputFieldComponent < ViewComponent::Base
     'mt-1 text-sm text-gray-500'
   end
 
-  def error_classes
-    'mt-1 text-sm text-red-600'
-  end
-
   def required_indicator
     return unless required
-    
     content_tag(:span, '*', class: 'text-red-500 ml-1')
   end
 
   def determine_state(provided_state)
-    # Auto-detect error state if form builder is present
-    return :error if has_errors? && show_errors
     validate_state(provided_state)
   end
 
   def icon_span
     position_classes = icon_position == :left ?
       "left-3" : "right-3"
-
     content_tag(:span,
       icon.html_safe,
       class: "absolute inset-y-0 #{position_classes} flex items-center text-gray-400 pointer-events-none"

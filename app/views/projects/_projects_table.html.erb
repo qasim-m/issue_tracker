@@ -2,7 +2,7 @@
     <thead class="bg-gray-200">
         <tr>
             <th class="py-2 w-16">
-                <%= render ParaComponent.new(variant: :base, margin_bottom: false, align: :center) do %>
+                <%= render ParaComponent.new(variant: :base, align: :center) do %>
                     No
                     <i class="fa-solid fa-sort sort_icon"
                         data-action="click->projects-search#sort"
@@ -11,7 +11,7 @@
                 <% end %>
             </th>
             <th class="py-2 px-4">
-                <%= render ParaComponent.new(variant: :base, margin_bottom: false, align: :left) do %>
+                <%= render ParaComponent.new(variant: :base) do %>
                     Title
                     <i class="fa-solid fa-sort sort_icon"
                         data-action="click->projects-search#sort"
@@ -20,7 +20,7 @@
                 <% end %>
             </th>
             <th class="py-2 w-32">
-                <%= render ParaComponent.new(variant: :base, margin_bottom: false, align: :center) do %>
+                <%= render ParaComponent.new(variant: :base, align: :center) do %>
                     Actions
                 <% end %>
             </th>
@@ -30,12 +30,12 @@
         <% @projects.each_with_index do |project, index| %>
             <tr data-id="<%= project.id %>">
                 <td class="w-16 num py-2">
-                    <%= render ParaComponent.new(variant: :small, margin_bottom: false, align: :center) do %>
+                    <%= render ParaComponent.new(align: :center, weight: :normal) do %>
                         <%= index + 1 %>
                     <% end %>
                 </td>
                 <td class="title">
-                    <%= render ParaComponent.new(variant: :base, margin_bottom: false, align: :left, weight: :bold) do %>
+                    <%= render ParaComponent.new(variant: :base, weight: :bold) do %>
                         <%= project.title %>
                     <% end %>
                 </td>

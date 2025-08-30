@@ -1,4 +1,3 @@
-# app/components/heading_component.rb
 # frozen_string_literal: true
 
 class HeadingComponent < ViewComponent::Base
@@ -58,7 +57,7 @@ class HeadingComponent < ViewComponent::Base
   }.freeze
 
   def initialize(
-    level: :h1,
+    level: :h2,
     color: :default,
     weight: :bold,
     align: :left,
@@ -76,19 +75,15 @@ class HeadingComponent < ViewComponent::Base
   end
 
 	def call
-		content_tag heading_tag, content, heading_attributes
+		content_tag(level.to_s, content, heading_attributes)
 	end
 
   private
 
   attr_reader :level, :color, :weight, :align, :responsive, :margin_bottom, :html_attributes
 
-  def heading_tag
-    level.to_s
-  end
-
   def heading_classes
-    classes = [
+    [
       base_classes,
       responsive_classes,
       COLOR_VARIANTS[color],
@@ -96,9 +91,7 @@ class HeadingComponent < ViewComponent::Base
       alignment_classes,
       margin_classes,
       html_attributes[:class]
-    ].compact
-
-    classes.join(' ')
+    ].compact.join(' ')
   end
 
   def base_classes
@@ -106,19 +99,14 @@ class HeadingComponent < ViewComponent::Base
   end
 
   def responsive_classes
-    return custom_size_classes unless responsive
-    
+    # If responsive is false, just use the base mobile size
+    return HEADING_STYLES[level][:mobile] unless responsive
     styles = HEADING_STYLES[level]
     [
       styles[:mobile],
       styles[:tablet],
       styles[:desktop]
     ].join(' ')
-  end
-
-  def custom_size_classes
-    # If responsive is false, just use the base mobile size
-    HEADING_STYLES[level][:mobile]
   end
 
   def alignment_classes
@@ -133,7 +121,6 @@ class HeadingComponent < ViewComponent::Base
 
   def margin_classes
     return unless margin_bottom
-    
     case level
     when :h1 then 'mb-4 md:mb-6'
     when :h2 then 'mb-3 md:mb-4'
@@ -148,7 +135,7 @@ class HeadingComponent < ViewComponent::Base
 
   def validate_level(level)
     level = level.to_sym
-    HEADING_STYLES.key?(level) ? level : :h1
+    HEADING_STYLES.key?(level) ? level : :h2
   end
 
   def validate_color(color)

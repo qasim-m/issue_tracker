@@ -4,10 +4,10 @@
     <% if issue.project_id.present? %>
       <div>
         <%= form.hidden_field :project_id %>
-        <%= render ParaComponent.new(variant: :small, margin_bottom: false, align: :left) do %>
+        <%= render ParaComponent.new(variant: :extra_small) do %>
           Project Name
         <% end %>
-        <%= render ParaComponent.new(variant: :base, weight: :bold, margin_bottom: false, align: :left) do %>
+        <%= render ParaComponent.new(variant: :base) do %>
           <%= Project.find(issue.project_id).title %>
         <% end %>
       </div>
@@ -62,7 +62,7 @@
         Cancle
       <% end %>
     <% end %>
-    <%= render(ButtonComponent.new(type: "submit", variant: :primary, size: :lg, class: "w-full sm:w-auto")) do %>
+    <%= render(ButtonComponent.new(type: "submit", size: :lg, class: "w-full sm:w-auto")) do %>
       <%= issue.new_record? ? "Create Issue" : "Update Issue" %>
     <% end %>
   </div>

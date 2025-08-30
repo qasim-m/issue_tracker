@@ -23,7 +23,7 @@
     <% if @issue.comments.exists? %>
 			<%= render partial: "comments/comment", collection: @issue.comments.order(created_at: :desc), as: :comment %>
 		<% else %>
-      <%= render ParaComponent.new(margin_bottom: false, align: :center) do %>
+      <%= render ParaComponent.new(align: :center) do %>
         No comments yet. Be the first to add one!
       <% end %>
 		<% end %>

@@ -36,7 +36,7 @@ class LinkComponent < ViewComponent::Base
   end
 
   def call
-    link_to href, **link_attributes do
+    link_to(href, **link_attributes) do
       link_content
     end
   end
@@ -48,7 +48,6 @@ class LinkComponent < ViewComponent::Base
 
   def link_content
 		return text_content unless icon.present?
-
 		if icon_position == :right
 				text_content + icon_content
 		else
@@ -62,7 +61,6 @@ class LinkComponent < ViewComponent::Base
 
   def icon_content
     return unless icon.present?
-
     content_tag(:span, class: icon_spacing_classes) do
       case icon
       when String
@@ -97,21 +95,16 @@ class LinkComponent < ViewComponent::Base
   end
 
   def width_classes
-    full_width? ? 'w-full' : nil
+    full_width ? 'w-full' : nil
   end
 
   def icon_spacing_classes
     return 'mr-0' unless content.present?
-
     case icon_position
     when :left then 'mr-1'
     when :right then 'ml-1'
     else 'mr-2'
     end
-  end
-
-  def full_width?
-    full_width
   end
 
   def validate_variant(variant)

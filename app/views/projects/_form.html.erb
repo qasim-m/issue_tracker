@@ -21,7 +21,7 @@
       <%= project.new_record? ? "Back To Projects" : "Back To Project" %>
     <% end %>
 
-    <%= render(ButtonComponent.new(type: "submit", variant: :primary, size: :lg, class: "w-full sm:w-auto")) do %>
+    <%= render(ButtonComponent.new(type: "submit", size: :lg, class: "w-full sm:w-auto")) do %>
       <%= project.new_record? ? "Create Project" : "Update Project" %>
     <% end %>
   </div>

@@ -1,4 +1,3 @@
-# app/components/para_component.rb
 # frozen_string_literal: true
 
 class ParaComponent < ViewComponent::Base
@@ -20,9 +19,9 @@ class ParaComponent < ViewComponent::Base
       desktop: 'lg:text-base'  # 16px
     },
     extra_small: {
-      mobile: 'text-xs',      
-      tablet: 'md:text-xs',    
-      desktop: 'lg:text-sm' 
+      mobile: 'text-xs',
+      tablet: 'md:text-xs',
+      desktop: 'lg:text-sm'
     }
   }.freeze
 
@@ -30,12 +29,12 @@ class ParaComponent < ViewComponent::Base
   FONT_WEIGHTS = HeadingComponent::FONT_WEIGHTS
 
   def initialize(
-    variant: :base,
+    variant: :small,
     color: :default,
-    weight: :normal,
+    weight: :bold,
     align: :left,
     responsive: true,
-    margin_bottom: true,
+    margin_bottom: false,
     **html_attributes
   )
     @variant = validate_variant(variant)
@@ -48,7 +47,7 @@ class ParaComponent < ViewComponent::Base
   end
 
   def call
-    content_tag :p, content, para_attributes
+    content_tag(:p, content, para_attributes)
   end
 
   private
@@ -57,7 +56,7 @@ class ParaComponent < ViewComponent::Base
               :margin_bottom, :html_attributes
 
   def para_classes
-    classes = [
+    [
       base_classes,
       responsive_classes,
       COLOR_VARIANTS[color],
@@ -65,9 +64,7 @@ class ParaComponent < ViewComponent::Base
       alignment_classes,
       margin_classes,
       html_attributes[:class]
-    ].compact
-
-    classes.join(' ')
+    ].compact.join(' ')
   end
 
   def base_classes
@@ -75,19 +72,14 @@ class ParaComponent < ViewComponent::Base
   end
 
   def responsive_classes
-    return custom_size_classes unless responsive
-
+    # only mobile size if responsive disabled
+    return PARA_STYLES[variant][:mobile] unless responsive
     styles = PARA_STYLES[variant]
     [
       styles[:mobile],
       styles[:tablet],
       styles[:desktop]
     ].join(' ')
-  end
-
-  def custom_size_classes
-    # only mobile size if responsive disabled
-    PARA_STYLES[variant][:mobile]
   end
 
   def alignment_classes

@@ -19,7 +19,7 @@ RSpec.describe "Issues management", type: :system do
 
     visit new_project_issue_path(project)
 
-    fill_in "Issue Heading", with: "Login Bug"
+    fill_in "Issue Title", with: "Login Bug"
     fill_in "Description", with: "Login page fails with 500 error"
     click_button "Create Issue"
 
@@ -32,7 +32,7 @@ RSpec.describe "Issues management", type: :system do
     issue = create(:issue, title: "Old Title", description: "Some desc", project: project)
 
     visit edit_issue_path(issue)
-    fill_in "Issue Heading", with: "Updated Issue"
+    fill_in "Issue Title", with: "Updated Issue"
     fill_in "Description", with: "Updated description"
     click_button "Update Issue"
 

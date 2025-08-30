@@ -1,6 +1,6 @@
 <div id="<%= dom_id issue %>" class="bg-white rounded-2xl shadow-md border border-gray-200 p-6 hover:shadow-lg transition duration-200">
   <div class="flex justify-between items-center gap-3 sm:gap-0 mb-4">
-    <%= render(HeadingComponent.new(level: :h3, color: :default, weight: :bold)) do %>
+    <%= render(HeadingComponent.new(level: :h3)) do %>
       <%= issue.project&.title || "Untitled Project" %>
     <% end %>
     <div class="flex justify-between items-center gap-3 sm:gap-0 border-2 border-gray-500 rounded-lg">
@@ -19,28 +19,28 @@
   <div class="grid grid-cols-1 gap-4 text-sm">
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div class="flex gap-2 items-center">
-        <%= render ParaComponent.new(variant: :small, weight: :normal, margin_bottom: false) do %>
+        <%= render ParaComponent.new(weight: :normal) do %>
           Issue No: 
         <% end %>
-        <%= render ParaComponent.new(variant: :small, weight: :bold, margin_bottom: false) do %>
+        <%= render ParaComponent.new do %>
           <%= issue.issue_number %>
         <% end %>
       </div>
       <div class="flex gap-2 items-center">
-        <%= render ParaComponent.new(variant: :small, weight: :normal, margin_bottom: false) do %>
+        <%= render ParaComponent.new(weight: :normal) do %>
           Created At: 
         <% end %>
-        <%= render ParaComponent.new(variant: :small, weight: :bold, margin_bottom: false) do %>
+        <%= render ParaComponent.new do %>
           <%= issue.created_at&.strftime("%b %d, %Y") %>
         <% end %>
       </div>
     </div>
     <div class="grid grid-cols-1 gap-4">
       <div class="flex gap-2 items-center">
-        <%= render ParaComponent.new(variant: :small, weight: :normal, margin_bottom: false) do %>
+        <%= render ParaComponent.new(weight: :normal) do %>
           Title:
         <% end %>
-        <%= render ParaComponent.new(variant: :small, weight: :bold, margin_bottom: false) do %>
+        <%= render ParaComponent.new do %>
           <%= issue.title %>
         <% end %>
       </div>
@@ -48,10 +48,10 @@
     <% if issue.description.present? %>
       <div class="grid grid-cols-1 gap-4">
         <div class="flex flex-col justify-center">
-          <%= render ParaComponent.new(variant: :small, weight: :normal, margin_bottom: false) do %>
+          <%= render ParaComponent.new(weight: :normal) do %>
             Description:
           <% end %>
-          <%= render ParaComponent.new(variant: :small, weight: :bold, margin_bottom: false) do %>
+          <%= render ParaComponent.new do %>
             <%= issue.description %>
           <% end %>
         </div>
@@ -59,10 +59,10 @@
     <% end %>
     <div class="grid grid-cols-1 gap-4">
       <div class="flex gap-2 items-center">
-        <%= render ParaComponent.new(variant: :small, weight: :normal, margin_bottom: false) do %>
+        <%= render ParaComponent.new(weight: :normal) do %>
           Assigned To:
         <% end %>
-        <%= render ParaComponent.new(variant: :small, weight: :bold, margin_bottom: false) do %>
+        <%= render ParaComponent.new do %>
           <%= issue.assignee&.name.presence || "Unassigned" %>
         <% end %>
       </div>
@@ -70,16 +70,11 @@
     <div class="grid grid-cols-1 gap-4">
       <div class="flex gap-2 items-center">
         <%= render ParaComponent.new(
-          variant: :small,
-          weight: :normal,
-          margin_bottom: false
+          weight: :normal
         ) do %>
           Status:
         <% end %>
         <%= render ParaComponent.new(
-              variant: :small,
-              weight: :bold,
-              margin_bottom: false,
               class: "py-1 px-1.5 rounded-lg " + case issue.status
                       when "open"        then "bg-green-100 text-green-700"
                       when "on_hold"     then "bg-yellow-100 text-yellow-700"

@@ -1,6 +1,6 @@
 <div class="flex justify-center items-center mt-30 mx-auto">
   <div class="bg-white sm:p-10 p-5 rounded-lg shadow-xl">
-    <%= render(HeadingComponent.new(level: :h2, color: :secondary, weight: :bold)) do %>
+    <%= render(HeadingComponent.new(color: :secondary)) do %>
       Create a new account
     <% end %>
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
@@ -44,7 +44,7 @@
         autocomplete: "new-password"
       ) %>
 
-      <%= render(ButtonComponent.new(type: "submit", variant: :primary, full_width: true, size: :lg)) do %>
+      <%= render(ButtonComponent.new(type: "submit", full_width: true, size: :lg)) do %>
         Sign Up
       <% end %>
     <% end %>

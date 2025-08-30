@@ -16,7 +16,7 @@ class Search::SearchComponent < ViewComponent::Base
     **html_options
   )
     @name = name
-    @id = id || "#{name.parameterize}-search"
+    @id = id
     @placeholder = placeholder
     @value = value
     @icon_class = icon_class

@@ -1,4 +1,3 @@
-# app/components/checkbox_component.rb
 # frozen_string_literal: true
 
 class CheckboxComponent < ViewComponent::Base
@@ -40,12 +39,8 @@ class CheckboxComponent < ViewComponent::Base
     color: :primary,
     label_position: :right,
     required: false,
-    disabled: false,
-    indeterminate: false,
-    description: nil,
     wrapper_class: nil,
     label_class: nil,
-    show_errors: true,
     **html_attributes
   )
     @form_builder = form_builder
@@ -56,12 +51,8 @@ class CheckboxComponent < ViewComponent::Base
     @color = validate_color(color)
     @label_position = validate_label_position(label_position)
     @required = required
-    @disabled = disabled
-    @indeterminate = indeterminate
-    @description = description
     @wrapper_class = wrapper_class
     @label_class = label_class
-    @show_errors = show_errors
     @html_attributes = html_attributes
   end
 
@@ -70,9 +61,7 @@ class CheckboxComponent < ViewComponent::Base
 			safe_join([
 				(tag.input(**hidden_field_attributes) if using_form_builder?),
 				tag.input(**checkbox_attributes),
-				(content_tag(:label, label + (required_indicator || ""), **label_attributes) if show_label?),
-				(content_tag(:p, description, class: description_classes) if show_description?),
-				(safe_join(error_messages.map { |msg| content_tag(:p, msg, class: error_classes) }) if show_error_messages?)
+				(content_tag(:label, label + (required_indicator || ""), **label_attributes) if show_label?)
 			].compact)
 		end
 	end
@@ -80,8 +69,7 @@ class CheckboxComponent < ViewComponent::Base
   private
 
   attr_reader :form_builder, :attribute, :label, :checked, :size, :color, :label_position,
-              :required, :disabled, :indeterminate, :description, :wrapper_class,
-              :label_class, :show_errors, :html_attributes
+              :required, :wrapper_class, :label_class, :html_attributes
 
   def wrapper_classes
     base_classes = case label_position
@@ -103,7 +91,6 @@ class CheckboxComponent < ViewComponent::Base
       base_checkbox_classes,
       size_classes[:checkbox],
       COLOR_VARIANTS[color],
-      disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer',
       html_attributes[:class]
     ].compact.join(' ')
   end
@@ -113,26 +100,20 @@ class CheckboxComponent < ViewComponent::Base
 	end
 
   def label_classes
-    classes = [
+    [
       'cursor-pointer select-none',
       size_classes[:label],
       spacing_classes,
       required ? 'font-medium' : 'font-normal',
-      disabled ? 'opacity-50 cursor-not-allowed' : '',
-      has_errors? ? 'text-red-700' : 'text-gray-900',
       label_class
-    ].compact
-
-    classes.join(' ')
+    ].compact.join(' ')
   end
 
   def checkbox_attributes
     attrs = html_attributes.except(:class)
-    
     base_attrs = {
       type: 'checkbox',
       class: checkbox_classes,
-      disabled: disabled,
       required: required
     }
 
@@ -151,12 +132,6 @@ class CheckboxComponent < ViewComponent::Base
       base_attrs[:name] ||= checkbox_name
     end
 
-    # Handle indeterminate state (requires JavaScript)
-    if indeterminate
-      base_attrs[:data] ||= {}
-      base_attrs[:data][:indeterminate] = 'true'
-    end
-
     attrs.merge(base_attrs).compact
   end
 
@@ -164,7 +139,6 @@ class CheckboxComponent < ViewComponent::Base
     attrs = {
       class: label_classes
     }
-    
     # Associate label with checkbox
     if using_form_builder? || html_attributes[:id]
       attrs[:for] = checkbox_id
@@ -192,7 +166,6 @@ class CheckboxComponent < ViewComponent::Base
   def current_checked_value
     return nil unless using_form_builder? && attribute
     return nil unless form_builder.object.respond_to?(attribute)
-    
     form_builder.object.public_send(attribute)
   end
 
@@ -202,35 +175,14 @@ class CheckboxComponent < ViewComponent::Base
 
   def spacing_classes
     return '' if label_position.in?([:top, :bottom])
-    
     case label_position
     when :right then size_classes[:spacing]
     when :left then "mr-2" # Fixed spacing for left positioning
     end
   end
 
-  def has_errors?
-    return false unless using_form_builder? && attribute && show_errors
-    
-    form_builder.object.errors[attribute].any?
-  end
-
-  def error_messages
-    return [] unless has_errors?
-    
-    form_builder.object.errors[attribute]
-  end
-
   def show_label?
     label.present?
-  end
-
-  def show_description?
-    description.present?
-  end
-
-  def show_error_messages?
-    has_errors? && show_errors
   end
 
   def using_form_builder?
@@ -239,34 +191,7 @@ class CheckboxComponent < ViewComponent::Base
 
   def required_indicator
     return unless required && show_label?
-    
     content_tag(:span, '*', class: 'text-red-500 ml-1')
-  end
-
-  def description_classes
-    base_spacing = case label_position
-                   when :right then size_classes[:spacing]
-                   when :left then 'mr-2'
-                   when :top, :bottom then ''
-                   end
-
-    [
-      'text-xs text-gray-500 mt-1',
-      label_position == :right ? base_spacing : ''
-    ].compact.join(' ')
-  end
-
-  def error_classes
-    base_spacing = case label_position
-                   when :right then size_classes[:spacing]
-                   when :left then 'mr-2'
-                   when :top, :bottom then ''
-                   end
-
-    [
-      'text-xs text-red-600 mt-1',
-      label_position == :right ? base_spacing : ''
-    ].compact.join(' ')
   end
 
   def validate_size(input_size)
@@ -287,7 +212,6 @@ class CheckboxComponent < ViewComponent::Base
   # Hidden field for unchecked state (Rails convention)
   def hidden_field_attributes
     return {} unless using_form_builder?
-    
     {
       type: 'hidden',
       name: checkbox_name,

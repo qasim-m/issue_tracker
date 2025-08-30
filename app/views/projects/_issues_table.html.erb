@@ -1,10 +1,9 @@
 <div data-controller="issues-search" class="w-full" id="issues-container">
   <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4 md:mb-2 md:mt-6 mt-4">
-    <%= render ParaComponent.new(variant: :base, margin_bottom: false) do %>
+    <%= render ParaComponent.new(variant: :base, weight: :normal) do %>
       Total Issues: <%=  @project.issues.count %>
     <% end %>
     <%= render Search::SearchComponent.new(
-      name: "query",
       id: "issues-search",
       data: { "issues-search-target" => "search" },
       placeholder: "Search Issue"
@@ -17,7 +16,7 @@
           <thead class="bg-gray-100">
             <tr>
               <th class="p-2 whitespace-nowrap w-16">
-                <%= render ParaComponent.new(variant: :small, margin_bottom: false, align: :center) do %>
+                <%= render ParaComponent.new(align: :center) do %>
                   Issue No
                   <i class="fa-solid fa-sort sort_icon"
                     data-action="click->issues-search#sort"
@@ -26,7 +25,7 @@
                 <% end %>
               </th>
               <th class="p-2 whitespace-nowrap w-48">
-                <%= render ParaComponent.new(variant: :small, margin_bottom: false, align: :center) do %>
+                <%= render ParaComponent.new(align: :center) do %>
                   Title
                   <i class="fa-solid fa-sort sort_icon"
                     data-action="click->issues-search#sort"
@@ -35,7 +34,7 @@
                 <% end %>
               </th>
               <th class="p-2 whitespace-nowrap w-32">
-                <%= render ParaComponent.new(variant: :small, margin_bottom: false, align: :center) do %>
+                <%= render ParaComponent.new(align: :center) do %>
                   Date Created
                   <i class="fa-solid fa-sort sort_icon"
                     data-action="click->issues-search#sort"
@@ -44,7 +43,7 @@
                 <% end %>
               </th>
               <th class="p-2 whitespace-nowrap w-28">
-                <%= render ParaComponent.new(variant: :small, margin_bottom: false, align: :center) do %>
+                <%= render ParaComponent.new(align: :center) do %>
                   Assigned To
                   <i class="fa-solid fa-sort sort_icon"
                     data-action="click->issues-search#sort"
@@ -53,7 +52,7 @@
                 <% end %>
               </th>
               <th class="p-2 whitespace-nowrap w-16">
-                <%= render ParaComponent.new(variant: :small, margin_bottom: false, align: :center) do %>
+                <%= render ParaComponent.new(align: :center) do %>
                   Status
                   <i class="fa-solid fa-sort sort_icon"
                     data-action="click->issues-search#sort"
@@ -62,7 +61,7 @@
                 <% end %>
               </th>
               <th class="p-2 whitespace-nowrap w-32">
-                <%= render ParaComponent.new(variant: :small, margin_bottom: false, align: :center) do %>
+                <%= render ParaComponent.new(align: :center) do %>
                   Action
                 <% end %>
               </th>
@@ -72,22 +71,22 @@
             <% @project.issues.each do |issue| %>
               <tr data-id="<%= issue.id %>" class="text-sm">
                 <td class="issue_number">
-                  <%= render ParaComponent.new(variant: :extra_small, margin_bottom: false, align: :center) do %>
+                  <%= render ParaComponent.new(variant: :extra_small, align: :center, weight: :normal) do %>
                     <%= issue.issue_number %>
                   <% end %>
                 </td>
                 <td class="title">
-                  <%= render ParaComponent.new(variant: :small, weight: :bold, margin_bottom: false, align: :center, class: "break-words") do %>
+                  <%= render ParaComponent.new(align: :center, class: "break-words") do %>
                     <%= issue.title %>
                   <% end %>
                 </td>
                 <td class="created_at">
-                  <%= render ParaComponent.new(variant: :extra_small, margin_bottom: false, align: :center) do %>
+                  <%= render ParaComponent.new(variant: :extra_small, align: :center, weight: :normal) do %>
                     <%= issue.created_at.strftime("%b %d, %Y %H:%M") %>
                   <% end %>
                 </td>
                 <td class="assigned_to">
-                  <%= render ParaComponent.new(variant: :extra_small, margin_bottom: false, align: :center, class: "break-words") do %>
+                  <%= render ParaComponent.new(variant: :extra_small, align: :center, weight: :normal, class: "break-words") do %>
                     <%= issue.assigned_to.present? ? User.find(issue.assigned_to).name : "Unassigned" %>
                   <% end %>
                 </td>
@@ -95,7 +94,7 @@
                   <%= render ParaComponent.new(
                         variant: :extra_small,
                         align: :center,
-                        margin_bottom: false,
+                        weight: :normal,
                         class: "py-1 px-1.5 rounded-lg " + case issue.status
                                 when "open"        then "bg-green-100 text-green-700"
                                 when "on_hold"     then "bg-yellow-100 text-yellow-700"
@@ -118,7 +117,7 @@
       <ul class="pagination flex justify-center mt-4 space-x-2"></ul>
     <% else %>
       <div class="flex justify-center items-center mx-auto py-4 md:py-8">
-        <%= render ParaComponent.new(variant: :base, margin_bottom: false) do %>
+        <%= render ParaComponent.new(variant: :base) do %>
           No issues found. Start by creating a new one!
         <% end %>
       </div>

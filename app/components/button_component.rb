@@ -35,7 +35,7 @@ class ButtonComponent < ViewComponent::Base
   end
 
   def call
-    content_tag :button, **button_attributes do
+    content_tag(:button, **button_attributes) do
       button_content
     end
   end
@@ -47,7 +47,6 @@ class ButtonComponent < ViewComponent::Base
 
   def button_content
 		return text_content unless icon.present?
-
 		if icon_position == :right
 				text_content + icon_content
 		else
@@ -61,7 +60,6 @@ class ButtonComponent < ViewComponent::Base
 
   def icon_content
     return unless icon.present?
-
     content_tag(:span, class: icon_spacing_classes) do
       case icon
       when String
@@ -73,15 +71,12 @@ class ButtonComponent < ViewComponent::Base
   end
 
   def button_attributes
-    normalized_data = html_attributes.delete(:data)&.transform_keys { |key| key.to_s.tr("_", "-") } || {}
-
-    merged_classes = [button_classes, html_attributes.delete(:class)].compact.join(" ")
-
-    html_attributes.merge(
-      class: merged_classes,
+    data_attr = html_attributes.fetch(:data, nil)&.transform_keys { |key| key.to_s.tr("_", "-") } || {}
+    {
+      class: button_classes,
       type: type,
-      data: normalized_data
-    )
+      data: data_attr
+    }
   end
 
   def button_classes
@@ -90,8 +85,8 @@ class ButtonComponent < ViewComponent::Base
       VARIANTS[variant],
       SIZES[size],
       width_classes,
-      html_attributes[:class]
-    ].compact.join(' ')
+      html_attributes.fetch(:class, nil)
+      ].compact.join(' ')
   end
 
   def base_classes
@@ -102,7 +97,7 @@ class ButtonComponent < ViewComponent::Base
   end
 
   def width_classes
-    full_width? ? 'w-full' : nil
+    full_width ? 'w-full' : nil
   end
 
   def icon_size_classes
@@ -115,17 +110,12 @@ class ButtonComponent < ViewComponent::Base
 
   def icon_spacing_classes
     return 'mr-0' unless content.present?
-
     case icon_position
     when :left then 'mr-1'
     when :right then 'ml-1'
     when :center then 'mx-auto'
     else 'mx-auto'
     end
-  end
-
-  def full_width?
-    full_width
   end
 
   def validate_variant(variant)

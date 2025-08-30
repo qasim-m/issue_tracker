@@ -16,7 +16,7 @@
     <div class="hidden w-full md:block md:w-auto mx-4" id="nav_dropdown">
       <div class="flex flex-row items-center justify-between space-x-4 mt-4 md:mt-0 md:space-x-8">
         <% if user_signed_in? %>
-          <%= render ParaComponent.new(variant: :small, color: :white, margin_bottom: false) do %>
+          <%= render ParaComponent.new(color: :white) do %>
             <i class="fa fa-user"></i>
             <%= current_user.name %>
           <% end %>

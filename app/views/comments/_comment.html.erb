@@ -1,14 +1,14 @@
 <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
   <div class="flex justify-between items-center">
-    <%= render ParaComponent.new(variant: :small, weight: :bold, margin_bottom: false, align: :left) do %>
+    <%= render ParaComponent.new do %>
       <%= comment.user&.name || "Anonymous" %>
     <% end %>
-    <%= render ParaComponent.new(variant: :extra_small, margin_bottom: false, align: :left) do %>
+    <%= render ParaComponent.new(variant: :extra_small, weight: :normal) do %>
       <%= comment.created_at.strftime("%b %d, %Y %H:%M") %>
     <% end %>
   </div>
   <hr class="border-t border-gray-300 mb-4 mt-1">
-  <%= render ParaComponent.new(variant: :small, margin_bottom: false, align: :left) do %>
+  <%= render ParaComponent.new(weight: :normal) do %>
     <%= comment.text %>
   <% end %>
 </div>
