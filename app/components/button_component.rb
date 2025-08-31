@@ -72,11 +72,12 @@ class ButtonComponent < ViewComponent::Base
 
   def button_attributes
     data_attr = html_attributes.fetch(:data, nil)&.transform_keys { |key| key.to_s.tr("_", "-") } || {}
+    extra_attrs = html_attributes.except(:class, :data)
     {
       class: button_classes,
       type: type,
       data: data_attr
-    }
+    }.merge(extra_attrs)
   end
 
   def button_classes
