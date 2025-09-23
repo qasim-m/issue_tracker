@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 ruby "3.3.9"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0.2", ">= 8.0.2.1"
+gem "rails", "~> 8.0.3"
 gem "tailwindcss-ruby", "~> 4.1.11"
 gem "tailwindcss-rails", "~> 4.3"
 gem "activerecord", "~> 8.0"
